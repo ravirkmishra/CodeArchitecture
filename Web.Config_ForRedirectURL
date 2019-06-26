@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://schemas.microsoft.com/.NetConfiguration/v2.0">
+
+        <configSections>
+          
+        </configSections>
+    <system.webServer>
+        <rewrite>
+            <rules>
+                <rule name="URLRewriteSample" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions>
+                        <add input="{HTTP_HOST}" pattern="^([a-zA-Z0-9-_]{1,20}\.){0,3}domain\.com$" />
+                    </conditions>
+                    <action type="Redirect" url="http://google.com" />
+                </rule>
+                <rule name="X-Forwareded Host" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions>
+                        <add input="{HTTP: X-Forwarded-Host}" pattern="^$" negate="true" />
+                        <add input="{HTTP:X-Forwarded-Host}" pattern="^([a-zA-Z0-9-_]{1,20}\.){0,3}(domain1\.com|domain2\.com|domain3\.com)$" negate="true" />
+                    </conditions>
+                    <action type="Redirect" url="http://google.com" />
+                </rule>
+            </rules>
+        </rewrite>
+    </system.webServer>
+
+     
+</configuration>
